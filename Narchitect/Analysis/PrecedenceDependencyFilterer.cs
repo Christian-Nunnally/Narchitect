@@ -12,7 +12,6 @@ namespace Narchitect.Analysis
         public IEnumerable<Dependency> Filter(IEnumerable<Dependency> dependencies)
         {
             var filteredDependecies = new List<Dependency>(dependencies);
-
             for (int i = 0; i < filteredDependecies.Count; i++)
             {
                 var dependency = filteredDependecies[i];
@@ -30,19 +29,19 @@ namespace Narchitect.Analysis
                     }
                 }
             }
-
             return filteredDependecies;
         }
 
         private Func<Dependency, bool> IsDependencyTheSame(Dependency firstDependency) => secondDependency =>
         {
             return firstDependency.FromIdentifier == secondDependency.FromIdentifier
-                && firstDependency.ToIdentifier == secondDependency.ToIdentifier;
+                && firstDependency.ToIdentifier == secondDependency.ToIdentifier
+                && firstDependency.EdgeType != secondDependency.EdgeType;
         };
 
         private bool HasPrecedence(Dependency dependency, Dependency otherDependency)
         {
-            return dependency.EdgeType > otherDependency.EdgeType;
+            return dependency.EdgeType < otherDependency.EdgeType;
         }
     }
 }
