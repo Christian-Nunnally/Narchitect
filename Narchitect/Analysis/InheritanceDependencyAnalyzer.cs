@@ -9,10 +9,13 @@ namespace Narchitect.Analysis
         public IEnumerable<Dependency> AnalyzeForDependencies(ClassModel classModel)
         {
             var dependencies = new List<Dependency>();
-            foreach (var baseTypeName in classModel.BaseTypeNames)
+            if (classModel.BaseTypeNames is object)
             {
-                var dependency = new Dependency(classModel.Name, baseTypeName, UmlEdgeType.Inheritence);
-                dependencies.Add(dependency);
+                foreach (var baseTypeName in classModel.BaseTypeNames)
+                {
+                    var dependency = new Dependency(classModel.Name, baseTypeName, UmlEdgeType.Inheritence);
+                    dependencies.Add(dependency);
+                }
             }
             return dependencies;
         }
