@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -14,20 +15,24 @@ namespace Narchitect
     {
         static async Task Main(string[] args)
         {
-            const string ClassFilePath = "C:/DSW/Source/MocCommon/MocCommon/SourceModel/BreakpointCondition.cs";
-            const string DotFilePath = @"C:/Users/cnunnall/Desktop/Dot/dot.dot";
-            const string SvgFilePath = @"C:/Users/cnunnall/Desktop/Dot/uml.svg";
+            // Debugger.Launch();
+
+            const string DotFilePath = @"C:/Users/gdewitt/Desktop/dot.dot";
+            const string SvgFilePath = @"C:/Users/gdewitt/Desktop/uml.svg";
 
             // Clean up from before
             if (File.Exists(DotFilePath)) File.Delete(DotFilePath);
-
-            // Parse the syntax tree to find all classes
-            CompilationUnitSyntax root = ClassFileParser.Parse(ClassFilePath);
-            var syntaxTreeParser = new SyntaxTreeParser();
-            var classParser = new ClassSyntaxParser();
-            syntaxTreeParser.RegisterParsingStratagy(classParser);
-            syntaxTreeParser.Parse(root);
-            var classes = classParser.ParsedClasses;
+            List<Model.ClassModel> classes = new List<Model.ClassModel>();
+            foreach (string classFilePath in args)
+            {
+                // Parse the syntax tree to find all classes
+                CompilationUnitSyntax root = ClassFileParser.Parse(classFilePath);
+                var syntaxTreeParser = new SyntaxTreeParser();
+                var classParser = new ClassSyntaxParser();
+                syntaxTreeParser.RegisterParsingStratagy(classParser);
+                syntaxTreeParser.Parse(root);
+                classes.AddRange(classParser.ParsedClasses);
+            }
 
             // Analyze classes for dependencies
             var analyzer = new AggregatingDependencyAnalyzer();
