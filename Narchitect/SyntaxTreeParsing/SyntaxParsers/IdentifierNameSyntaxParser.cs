@@ -14,7 +14,10 @@ namespace Narchitect.SyntaxTreeParsing
         public void Parse(SyntaxNode syntaxNode)
         {
             var typeNode = (IdentifierNameSyntax)syntaxNode;
-            FoundTypeNames.Add(typeNode.ToString());
+            if (!(typeNode.Parent is QualifiedNameSyntax))
+            {
+                FoundTypeNames.Add(typeNode.ToString());
+            }
         }
     }
 }
