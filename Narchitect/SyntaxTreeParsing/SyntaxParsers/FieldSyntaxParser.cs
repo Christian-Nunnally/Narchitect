@@ -18,16 +18,15 @@ namespace Narchitect.SyntaxTreeParsing
         {
             var fieldSyntaxNode = (FieldDeclarationSyntax)syntaxNode;
             var modifiers = fieldSyntaxNode.Modifiers;
-            var typeNames = fieldSyntaxNode.Declaration.Type.ParseTypeNamesFromType();
-            var fieldName = fieldSyntaxNode.Declaration.Variables.First().Identifier.Text;
-
+            
             var field = new FieldModel();
             field.IsPublic = modifiers.Any(SyntaxKind.PublicKeyword);
             field.IsPrivate = modifiers.Any(SyntaxKind.PrivateKeyword);
             field.IsInternal = modifiers.Any(SyntaxKind.InternalKeyword);
             field.IsProtected = modifiers.Any(SyntaxKind.ProtectedKeyword);
-            field.TypeNames = typeNames;
-            field.Name = fieldName;
+            field.TypeNames = fieldSyntaxNode.Declaration.Type.ParseTypeNamesFromType();
+            field.TypeString = fieldSyntaxNode.Declaration.Type.ToString();
+            field.Name = fieldSyntaxNode.Declaration.Variables.First().Identifier.Text;
             ParsedFields.Add(field);
         }
     }

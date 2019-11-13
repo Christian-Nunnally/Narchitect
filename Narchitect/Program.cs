@@ -34,6 +34,7 @@ namespace Narchitect
             analyzer.AddAnalyzer(new InheritanceDependencyAnalyzer());
             analyzer.AddAnalyzer(new AssociationDependencyAnalyzer());
             analyzer.AddAnalyzer(new DependencyDependencyAnalyzer());
+            analyzer.AddAnalyzer(new CompositionDependencyAnalyzer());
             var dependencies = classes.SelectMany(analyzer.AnalyzeForDependencies);
 
             // Filter out dependencies that we dont care about

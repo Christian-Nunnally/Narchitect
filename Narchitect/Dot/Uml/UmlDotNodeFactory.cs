@@ -23,8 +23,8 @@ namespace Narchitect.Dot.Uml
         private string CreateUmlFormattedLabel(ClassModel classNode)
         {
             var nodeTitleLines = new string[] { $"<b>{classNode.Name}</b>" };
-            var fieldLines = classNode.Fields.Select(CreateFieldLabel).ToList();
-            var propertyLines = classNode.Properties.Select(CreatePropertyLabel).ToList();
+            var fieldLines = classNode.Fields.Select(CreateMemberLabel).ToList();
+            var propertyLines = classNode.Properties.Select(CreateMemberLabel).ToList();
             var methodLines = classNode.Methods.Select(CreateMethodLabel).ToList();
 
             var nodeTitleTable = BuildHtmlTableString(nodeTitleLines, "center", cellPadding: 6);
@@ -53,24 +53,20 @@ namespace Narchitect.Dot.Uml
             return builder.ToString();
         }
 
-        private string CreateFieldLabel(FieldModel field)
+        private string CreateMemberLabel(MemberModel member)
         {
-            return $"{field.GetAccessSymbol()} {field.Name} : {field.TypeNames.FirstOrDefault()}";
-        }
-
-        private string CreatePropertyLabel(PropertyModel field)
-        {
-            return $"{field.GetAccessSymbol()} {field.Name} : {field.TypeNames.FirstOrDefault()}";
+            return $"{member.GetAccessSymbol()} {member.Name} : {ReplaceHtmlSpecialCharacters(member.TypeString)}";
         }
 
         private string CreateMethodLabel(MethodModel method)
         {
-            var cleanTypeName = method.TypeNames.Count() != 1
-                ? "Decide how to print these"
-                : method.TypeNames.First().Replace("<", @"\<").Replace(">", @"\>");
-
             var parameters = string.Join(", ", method.ParameterTypeNames);
-            return $"{method.GetAccessSymbol()} {method.Name}({parameters}) : {cleanTypeName}";
+            return $"{method.GetAccessSymbol()} {method.Name}({parameters}) : {ReplaceHtmlSpecialCharacters(method.TypeString)}";
+        }
+
+        private string ReplaceHtmlSpecialCharacters(string text)
+        {
+            return text.Replace("<", "&lt;").Replace(">", "&gt;");
         }
     }
 }

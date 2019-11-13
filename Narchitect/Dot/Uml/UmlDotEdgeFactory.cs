@@ -15,6 +15,7 @@
                 case UmlEdgeType.Dependency:
                     return CreateDependencyEdge(from, to, label);
                 case UmlEdgeType.Composition:
+                    return CreateCompositionEdge(from, to, label);
                 default:
                     return CreateGeneralizationEdge(from, to, label);
             }
@@ -38,6 +39,13 @@
             var edge = new DotEdge(from, to);
             edge.StyleProperties["style"] = "dotted";
             edge.StyleProperties["arrowhead"] = "vee";
+            return edge;
+        }
+
+        private DotEdge CreateCompositionEdge(string from, string to, string label)
+        {
+            var edge = new DotEdge(from, to);
+            edge.StyleProperties["arrowhead"] = "diamond";
             return edge;
         }
     }
