@@ -18,6 +18,7 @@ namespace Narchitect.Dot
             System.Diagnostics.Process process = new System.Diagnostics.Process();
             System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
             startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Normal;
+            startInfo.UseShellExecute = false;
             startInfo.FileName = "cmd.exe";
             startInfo.Arguments = $"/C dot.exe -Tsvg {dotFilePath} -o {svgFilePath}";
             process.StartInfo = startInfo;
