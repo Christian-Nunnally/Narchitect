@@ -29,7 +29,7 @@ namespace Narchitect.SyntaxTreeParsing
             internalParser.Parse(classSyntaxNode);
 
             var className = classSyntaxNode.Identifier.Text;
-            var baseTypeNames = classSyntaxNode.BaseList?.Types.Select(t => t.Type.ToString());
+            var baseTypeNames = classSyntaxNode.BaseList?.Types.SelectMany(t => t.Type.ParseTypeNamesFromType());
 
             var classNode = new ClassModel();
             classNode.Name = className;

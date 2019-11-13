@@ -25,7 +25,7 @@ namespace Narchitect.SyntaxTreeParsing
             method.IsInternal = modifiers.Any(SyntaxKind.InternalKeyword);
             method.IsProtected = modifiers.Any(SyntaxKind.ProtectedKeyword);
             method.TypeNames = methodSyntaxNode.ReturnType.ParseTypeNamesFromType();
-            method.TypeString = methodSyntaxNode.ReturnType.ToString();
+            method.TypeString = methodSyntaxNode.ReturnType.ToString().Split('.').Last();
             method.Name = methodSyntaxNode.Identifier.Text;
             method.ParameterTypeNames = methodSyntaxNode.ParameterList.Parameters.SelectMany(p => p.Type.ParseTypeNamesFromType());
             ParsedMethods.Add(method);

@@ -25,7 +25,7 @@ namespace Narchitect.SyntaxTreeParsing
             field.IsInternal = modifiers.Any(SyntaxKind.InternalKeyword);
             field.IsProtected = modifiers.Any(SyntaxKind.ProtectedKeyword);
             field.TypeNames = fieldSyntaxNode.Declaration.Type.ParseTypeNamesFromType();
-            field.TypeString = fieldSyntaxNode.Declaration.Type.ToString();
+            field.TypeString = fieldSyntaxNode.Declaration.Type.ToString().Split('.').Last();
             field.Name = fieldSyntaxNode.Declaration.Variables.First().Identifier.Text;
             ParsedFields.Add(field);
         }

@@ -25,7 +25,7 @@ namespace Narchitect.SyntaxTreeParsing
             property.IsInternal = modifiers.Any(SyntaxKind.InternalKeyword);
             property.IsProtected = modifiers.Any(SyntaxKind.ProtectedKeyword);
             property.TypeNames = propertySyntaxNode.Type.ParseTypeNamesFromType();
-            property.TypeString = propertySyntaxNode.Type.ToString();
+            property.TypeString = propertySyntaxNode.Type.ToString().Split('.').Last();
             property.Name = propertySyntaxNode.Identifier.Text;
             ParsedProperties.Add(property);
         }
