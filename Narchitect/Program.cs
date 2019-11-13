@@ -16,7 +16,7 @@ namespace Narchitect
     {
         static async Task Main(string[] args)
         {
-            Debugger.Launch();
+            // Debugger.Launch();
             string[] fileOrDirectoryPaths = args[0].Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
             string tempDirectory = Path.GetTempPath().Replace(@"\\", @"\");
             string DotFilePath = tempDirectory + "dot.dot";
