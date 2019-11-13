@@ -14,11 +14,12 @@ namespace Narchitect.SyntaxTreeParsing
 
         public void Parse(SyntaxNode syntaxNode)
         {
-            var typeNode = (IdentifierNameSyntax)syntaxNode;
-            if (!(typeNode.Parent is QualifiedNameSyntax))
+            var typeNode = syntaxNode;
+            while (typeNode.Parent is QualifiedNameSyntax)
             {
-                FoundTypeNames.Add(typeNode.ToString().Split('.').Last());
+                typeNode = typeNode.Parent;
             }
+            FoundTypeNames.Add(typeNode.ToString().Split('.').Last());
         }
     }
 }
