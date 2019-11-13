@@ -14,11 +14,11 @@ namespace Narchitect.SyntaxTreeParsing
 
         public Type ParsableSyntaxType => typeof(MethodDeclarationSyntax);
 
-        public void Parse(SyntaxTreeParser parser, SyntaxNode syntaxNode)
+        public void Parse(SyntaxNode syntaxNode)
         {
             var methodSyntaxNode = (MethodDeclarationSyntax)syntaxNode;
             var modifiers = methodSyntaxNode.Modifiers;
-            var typeName = methodSyntaxNode.ReturnType.ToString();
+            var typeNames = methodSyntaxNode.ReturnType.ParseTypeNamesFromType();
             var fieldName = methodSyntaxNode.Identifier.Text;
             var parameterTypeNames = methodSyntaxNode.ParameterList.Parameters.Select(p => p.Type.ToString());
 
@@ -27,7 +27,7 @@ namespace Narchitect.SyntaxTreeParsing
             method.IsPrivate = modifiers.Any(SyntaxKind.PrivateKeyword);
             method.IsInternal = modifiers.Any(SyntaxKind.InternalKeyword);
             method.IsProtected = modifiers.Any(SyntaxKind.ProtectedKeyword);
-            method.TypeName = typeName;
+            method.TypeNames = typeNames;
             method.Name = fieldName;
             method.ParameterTypeNames = parameterTypeNames;
             ParsedMethods.Add(method);

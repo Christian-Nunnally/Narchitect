@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Narchitect
 {
-    internal class SyntaxTreeParser
+    public class SyntaxTreeParser
     {
         private IDictionary<Type, ISyntaxParsingStrategy> _syntaxParsingStrategies = new Dictionary<Type, ISyntaxParsingStrategy>();
 
@@ -13,7 +13,7 @@ namespace Narchitect
             var nodeType = node.GetType();
             if (_syntaxParsingStrategies.TryGetValue(nodeType, out ISyntaxParsingStrategy strategy))
             {
-                strategy.Parse(this, node);
+                strategy.Parse(node);
             }
             foreach (var child in node.ChildNodes())
             {

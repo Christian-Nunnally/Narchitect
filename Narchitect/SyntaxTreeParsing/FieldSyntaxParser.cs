@@ -14,11 +14,11 @@ namespace Narchitect.SyntaxTreeParsing
 
         public Type ParsableSyntaxType => typeof(FieldDeclarationSyntax);
 
-        public void Parse(SyntaxTreeParser parser, SyntaxNode syntaxNode)
+        public void Parse(SyntaxNode syntaxNode)
         {
             var fieldSyntaxNode = (FieldDeclarationSyntax)syntaxNode;
             var modifiers = fieldSyntaxNode.Modifiers;
-            var typeName = fieldSyntaxNode.Declaration.Type.ToString();
+            var typeNames = fieldSyntaxNode.Declaration.Type.ParseTypeNamesFromType();
             var fieldName = fieldSyntaxNode.Declaration.Variables.First().Identifier.Text;
 
             var field = new FieldModel();
@@ -26,7 +26,7 @@ namespace Narchitect.SyntaxTreeParsing
             field.IsPrivate = modifiers.Any(SyntaxKind.PrivateKeyword);
             field.IsInternal = modifiers.Any(SyntaxKind.InternalKeyword);
             field.IsProtected = modifiers.Any(SyntaxKind.ProtectedKeyword);
-            field.TypeName = typeName;
+            field.TypeNames = typeNames;
             field.Name = fieldName;
             ParsedFields.Add(field);
         }

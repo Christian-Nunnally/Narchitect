@@ -16,7 +16,7 @@ namespace Narchitect.Model
 
         public bool IsProtected { get; set; }
 
-        public string TypeName { get; set; }
+        public IEnumerable<string> TypeNames { get; set; }
 
         public char GetAccessSymbol()
         {

@@ -14,11 +14,11 @@ namespace Narchitect.SyntaxTreeParsing
 
         public Type ParsableSyntaxType => typeof(PropertyDeclarationSyntax);
 
-        public void Parse(SyntaxTreeParser parser, SyntaxNode syntaxNode)
+        public void Parse(SyntaxNode syntaxNode)
         {
             var propertySyntaxNode = (PropertyDeclarationSyntax)syntaxNode;
             var modifiers = propertySyntaxNode.Modifiers;
-            var typeName = propertySyntaxNode.Type.ToString();
+            var typeNames = propertySyntaxNode.Type.ParseTypeNamesFromType();
             var fieldName = propertySyntaxNode.Identifier.Text;
 
             var property = new PropertyModel();
@@ -26,7 +26,7 @@ namespace Narchitect.SyntaxTreeParsing
             property.IsPrivate = modifiers.Any(SyntaxKind.PrivateKeyword);
             property.IsInternal = modifiers.Any(SyntaxKind.InternalKeyword);
             property.IsProtected = modifiers.Any(SyntaxKind.ProtectedKeyword);
-            property.TypeName = typeName;
+            property.TypeNames = typeNames;
             property.Name = fieldName;
             ParsedProperties.Add(property);
         }

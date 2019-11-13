@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Narchitect.Dot.Uml;
 using Narchitect.Model;
 
@@ -9,15 +10,14 @@ namespace Narchitect.Analysis
         public IEnumerable<Dependency> AnalyzeForDependencies(ClassModel classModel)
         {
             var dependencies = new List<Dependency>();
-            foreach (var field in classModel.Fields)
+            var fieldsAndProperties = classModel.Fields.Concat<MemberModel>(classModel.Properties);
+            foreach (var member in fieldsAndProperties)
             {
-                var dependency = new Dependency(classModel.Name, field.TypeName, UmlEdgeType.Association);
-                dependencies.Add(dependency);
-            }
-            foreach (var property in classModel.Properties)
-            {
-                var dependency = new Dependency(classModel.Name, property.TypeName, UmlEdgeType.Association);
-                dependencies.Add(dependency);
+                foreach (var typeName in member.TypeNames)
+                {
+                    var dependency = new Dependency(classModel.Name, typeName, UmlEdgeType.Association);
+                    dependencies.Add(dependency);
+                }
             }
             return dependencies;
         }

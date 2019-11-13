@@ -22,7 +22,14 @@ namespace Narchitect.Dot
         {
             foreach (var styleProperty in properties)
             {
-                builder.Append($"{prefix}{styleProperty.Key} = \"{styleProperty.Value}\"\n");
+                if (styleProperty.Key == "label")
+                {
+                    builder.Append($"{prefix}{styleProperty.Key} = <{styleProperty.Value}>\n");
+                }
+                else
+                {
+                    builder.Append($"{prefix}{styleProperty.Key} = \"{styleProperty.Value}\"\n");
+                }
             }
         }
     }

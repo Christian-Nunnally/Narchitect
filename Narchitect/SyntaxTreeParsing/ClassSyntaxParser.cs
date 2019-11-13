@@ -13,7 +13,7 @@ namespace Narchitect.SyntaxTreeParsing
 
         public Type ParsableSyntaxType => typeof(ClassDeclarationSyntax);
 
-        public void Parse(SyntaxTreeParser parser, SyntaxNode syntaxNode)
+        public void Parse(SyntaxNode syntaxNode)
         {
             var classSyntaxNode = (ClassDeclarationSyntax)syntaxNode;
 
