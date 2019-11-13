@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
@@ -14,7 +15,7 @@ namespace Narchitect.SyntaxTreeParsing
         public void Parse(SyntaxNode syntaxNode)
         {
             var typeNode = (IdentifierNameSyntax)syntaxNode;
-            FoundTypeNames.Add(typeNode.ToString());
+            FoundTypeNames.Add(typeNode.ToString().Split('.').Last());
         }
     }
 }
