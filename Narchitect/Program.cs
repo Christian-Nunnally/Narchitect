@@ -22,10 +22,11 @@ namespace Narchitect
 
             // Clean up from before
             if (File.Exists(DotFilePath)) File.Delete(DotFilePath);
+
+            // Parse the syntax tree to find all classes
             List<Model.ClassModel> classes = new List<Model.ClassModel>();
             foreach (string classFilePath in args)
             {
-                // Parse the syntax tree to find all classes
                 CompilationUnitSyntax root = ClassFileParser.Parse(classFilePath);
                 var syntaxTreeParser = new SyntaxTreeParser();
                 var classParser = new ClassSyntaxParser();
