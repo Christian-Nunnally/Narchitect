@@ -2,7 +2,7 @@
   "profiles": {
     "Narchitect": {
       "commandName": "Project",
-      "commandLineArgs": "C:\\DSW\\Source\\NativeTarget\\Tests\\Tests.NativeTarget\\Integration\\NativeTarget\\Runtime\\LocalNativeRuntimeExecutableFunctionTests.cs"
+      "commandLineArgs": "\"C:\\DSW\\Source\\MocCommon\\MocCommon\\Design\\BreakpointProbeViewModel.cs\""
     }
   }
 }

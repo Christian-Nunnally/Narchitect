@@ -11,7 +11,7 @@ namespace Narchitect.Analysis
             var dependencies = new List<Dependency>();
             foreach (var instantiatedTypeNames in classModel.InstantiatedTypeNames)
             {
-                var dependency = new Dependency(classModel.Name, instantiatedTypeNames, UmlEdgeType.Composition);
+                var dependency = new Dependency(instantiatedTypeNames, classModel.Name, UmlEdgeType.Composition);
                 dependencies.Add(dependency);
             }
             return dependencies;

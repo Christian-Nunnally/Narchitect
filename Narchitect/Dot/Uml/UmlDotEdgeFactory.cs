@@ -46,7 +46,7 @@
         {
             var edge = new DotEdge(from, to);
             edge.StyleProperties["arrowhead"] = "none";
-            edge.StyleProperties["arrowtail"] = "diamond";
+            edge.StyleProperties["arrowhead"] = "diamond";
             return edge;
         }
     }

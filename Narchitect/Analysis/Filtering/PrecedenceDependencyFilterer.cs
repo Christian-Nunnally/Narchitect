@@ -34,9 +34,13 @@ namespace Narchitect.Analysis
 
         private Func<Dependency, bool> IsDependencyTheSame(Dependency firstDependency) => secondDependency =>
         {
-            return firstDependency.FromIdentifier == secondDependency.FromIdentifier
+            return (firstDependency.FromIdentifier == secondDependency.FromIdentifier
                 && firstDependency.ToIdentifier == secondDependency.ToIdentifier
-                && firstDependency.EdgeType != secondDependency.EdgeType;
+                && firstDependency.EdgeType != secondDependency.EdgeType) 
+                || (firstDependency.FromIdentifier == secondDependency.ToIdentifier
+                && firstDependency.ToIdentifier == secondDependency.FromIdentifier
+                && ((firstDependency.EdgeType != secondDependency.EdgeType)
+                && (firstDependency.EdgeType == Dot.Uml.UmlEdgeType.Composition || secondDependency.EdgeType == Dot.Uml.UmlEdgeType.Composition)));
         };
 
         private bool HasPrecedence(Dependency dependency, Dependency otherDependency)
