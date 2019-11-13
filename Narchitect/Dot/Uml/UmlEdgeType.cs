@@ -4,9 +4,9 @@
     {
         Inheritence,
         Generalization,
+        Composition,
         Association,
         OneWayAsssociation,
         Dependency,
-        Composition,
     }
 }

@@ -6,14 +6,15 @@ namespace Narchitect.Dot.Uml
         public DotGraph CreateUmlDotGraph()
         {
             var graph = new DotGraph();
-            graph.StyleProperties["fontname"] = "Consolas"; // "Bitstream Vera Sans";
+            graph.StyleProperties["fontname"] = "Segoe UI";
             graph.StyleProperties["fontsize"] = "8";
+            graph.StyleProperties["rankdir"] = "BT";
 
-            graph.DefaultNodeStyleProperties["fontname"] = "Consolas"; //"Bitstream Vera Sans";
+            graph.DefaultNodeStyleProperties["fontname"] = "Segoe UI";
             graph.DefaultNodeStyleProperties["fontsize"] = "8";
             graph.DefaultNodeStyleProperties["shape"] = "record";
 
-            graph.DefaultEdgeStyleProperties["fontname"] = "Consolas"; //"Bitstream Vera Sans";
+            graph.DefaultEdgeStyleProperties["fontname"] = "Segoe UI";
             graph.DefaultEdgeStyleProperties["fontsize"] = "8";
             return graph;
         }

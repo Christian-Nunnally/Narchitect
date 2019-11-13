@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Narchitect": {
+      "commandName": "Project",
+      "commandLineArgs": "C:\\DSW\\Source\\MocCommon\\MocCommon\\Design\\BreakpointProbeViewModel.cs"
+    }
+  }
+}

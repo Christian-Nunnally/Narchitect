@@ -1,8 +1,4 @@
 ﻿
-Narchitect
-
-
-
-
-1. Build up a list of classes with lists of each dep type.
-2. 
+Pass in class name as an argument
+Support parsing multiple classes
+Support updating the image?

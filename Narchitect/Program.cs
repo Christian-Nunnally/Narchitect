@@ -16,9 +16,9 @@ namespace Narchitect
         static async Task Main(string[] args)
         {
             // Debugger.Launch();
-
-            const string DotFilePath = @"C:/Users/gdewitt/Desktop/dot.dot";
-            const string SvgFilePath = @"C:/Users/gdewitt/Desktop/uml.svg";
+            string tempDirectory = Path.GetTempPath().Replace(@"\\", @"\");
+            string DotFilePath = tempDirectory + "dot.dot";
+            string SvgFilePath = tempDirectory + "uml.svg";
 
             // Clean up from before
             if (File.Exists(DotFilePath)) File.Delete(DotFilePath);
