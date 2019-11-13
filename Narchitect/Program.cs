@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -15,24 +16,17 @@ namespace Narchitect
     {
         static async Task Main(string[] args)
         {
-            // Debugger.Launch();
+            Debugger.Launch();
+            string[] fileOrDirectoryPaths = args[0].Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
             string tempDirectory = Path.GetTempPath().Replace(@"\\", @"\");
             string DotFilePath = tempDirectory + "dot.dot";
             string SvgFilePath = tempDirectory + "uml.svg";
 
-            // Clean up from before
-            if (File.Exists(DotFilePath)) File.Delete(DotFilePath);
-
             // Parse the syntax tree to find all classes
             List<Model.ClassModel> classes = new List<Model.ClassModel>();
-            foreach (string classFilePath in args)
+            foreach (string fileOrDirectoryPath in fileOrDirectoryPaths)
             {
-                CompilationUnitSyntax root = ClassFileParser.Parse(classFilePath);
-                var syntaxTreeParser = new SyntaxTreeParser();
-                var classParser = new ClassSyntaxParser();
-                syntaxTreeParser.RegisterParsingStratagy(classParser);
-                syntaxTreeParser.Parse(root);
-                classes.AddRange(classParser.ParsedClasses);
+                classes.AddRange(ParseFileOrDirectory(fileOrDirectoryPath));
             }
 
             // Analyze classes for dependencies
@@ -74,6 +68,45 @@ namespace Narchitect
 
             // 5. Open SVG
             Process.Start(SvgFilePath);
+        }
+
+        private static IEnumerable<Model.ClassModel> ParseFileOrDirectory(string fileOrDirectoryPath)
+        {
+            if (File.Exists(fileOrDirectoryPath))
+            {
+                return ParseSingleFile(fileOrDirectoryPath);
+            }
+            else if (Directory.Exists(fileOrDirectoryPath))
+            {
+                return ParseDirectory(fileOrDirectoryPath);
+            }
+            return Enumerable.Empty<Model.ClassModel>();
+        }
+
+        private static IEnumerable<Model.ClassModel> ParseSingleFile(string filePath)
+        {
+            CompilationUnitSyntax root = ClassFileParser.Parse(filePath);
+            var syntaxTreeParser = new SyntaxTreeParser();
+            var classParser = new ClassSyntaxParser();
+            syntaxTreeParser.RegisterParsingStratagy(classParser);
+            syntaxTreeParser.Parse(root);
+            return classParser.ParsedClasses;
+        }
+
+        private static IEnumerable<Model.ClassModel> ParseDirectory(string directoryPath)
+        {
+            List<Model.ClassModel> parsedClasses = new List<Model.ClassModel>();
+            string[] allFilesInDirectory = Directory.GetFiles(directoryPath, "*.cs");
+            foreach (var file in allFilesInDirectory)
+            {
+                parsedClasses.AddRange(ParseSingleFile(file));
+            }
+            string[] directories = Directory.GetDirectories(directoryPath);
+            foreach (var directory in directories)
+            {
+                parsedClasses.AddRange(ParseDirectory(directory));
+            }
+            return parsedClasses;
         }
     }
 }
