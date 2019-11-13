@@ -27,21 +27,21 @@ namespace Narchitect.Dot.Uml
             var propertyLines = classNode.Properties.Select(CreateMemberLabel).ToList();
             var methodLines = classNode.Methods.Select(CreateMethodLabel).ToList();
 
-            var nodeTitleTable = BuildHtmlTableString(nodeTitleLines, "center", cellPadding: 6);
-            var nodeFieldTable = BuildHtmlTableString(fieldLines, "left", cellPadding: 2);
-            var nodePropertyTable = BuildHtmlTableString(propertyLines, "left", cellPadding: 2);
-            var nodeMethodTable = BuildHtmlTableString(methodLines, "left", cellPadding: 2);
+            var nodeTitleTable = BuildHtmlTableString(nodeTitleLines, "center", cellPadding: 6, borderThickness: 1);
+            var nodeFieldTable = BuildHtmlTableString(fieldLines, "left", cellPadding: 2, borderThickness: 1);
+            var nodePropertyTable = BuildHtmlTableString(propertyLines, "left", cellPadding: 2, borderThickness: 1);
+            var nodeMethodTable = BuildHtmlTableString(methodLines, "left", cellPadding: 2, borderThickness: 1);
             var tables = new string[] { nodeTitleTable, nodeFieldTable, nodePropertyTable, nodeMethodTable };
 
             var nodeLines = tables.Where(x => !string.IsNullOrEmpty(x)).ToList();
-            return BuildHtmlTableString(nodeLines, "left", cellPadding: 0, addPaddingToTop: false);
+            return BuildHtmlTableString(nodeLines, "left", cellPadding: 0, borderThickness: 0, addPaddingToTop: false);
         }
 
-        private string BuildHtmlTableString(IList<string> contents, string contentAlignment, int cellPadding, bool addPaddingToTop = true)
+        private string BuildHtmlTableString(IList<string> contents, string contentAlignment, int cellPadding, int borderThickness, bool addPaddingToTop = true)
         {
             if (!contents.Any()) return string.Empty;
             var builder = new StringBuilder();
-            builder.Append($"<table border=\"1\" cellspacing=\"0\">");
+            builder.Append($"<table border=\"{borderThickness}\" cellspacing=\"0\">");
             if (addPaddingToTop) builder.Append($"<tr><td border=\"0\" height=\"3\"></td></tr>");
             foreach (var content in contents)
             {
