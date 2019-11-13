@@ -20,10 +20,12 @@ namespace Narchitect.SyntaxTreeParsing
             var fieldParser = new FieldSyntaxParser();
             var propertyParser = new PropertySyntaxParser();
             var methodParser = new MethodSyntaxParser();
+            var newKeywordParser = new ObjectCreationExpressionSyntaxParser();
             var internalParser = new SyntaxTreeParser();
             internalParser.RegisterParsingStratagy(fieldParser);
             internalParser.RegisterParsingStratagy(propertyParser);
             internalParser.RegisterParsingStratagy(methodParser);
+            internalParser.RegisterParsingStratagy(newKeywordParser);
             internalParser.Parse(classSyntaxNode);
 
             var className = classSyntaxNode.Identifier.Text;
@@ -35,6 +37,7 @@ namespace Narchitect.SyntaxTreeParsing
             classNode.Properties = propertyParser.ParsedProperties;
             classNode.Methods = methodParser.ParsedMethods;
             classNode.BaseTypeNames = baseTypeNames;
+            classNode.InstantiatedTypeNames = newKeywordParser.FoundInstantiatedTypeNames;
 
             ParsedClasses.Add(classNode);
         }

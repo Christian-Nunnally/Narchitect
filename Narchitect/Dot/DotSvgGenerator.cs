@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 
 namespace Narchitect.Dot
 {
@@ -15,13 +11,14 @@ namespace Narchitect.Dot
 
         public void GenerateSVGFromDot(string dotFilePath, string svgFilePath)
         {
-            System.Diagnostics.Process process = new System.Diagnostics.Process();
-            System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
+            Process process = new Process();
+            ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Normal;
             startInfo.FileName = "cmd.exe";
             startInfo.Arguments = $"/C dot.exe -Tsvg {dotFilePath} -o {svgFilePath}";
             process.StartInfo = startInfo;
             process.Start();
+            process.WaitForExit(5000);
         }
     }
 }

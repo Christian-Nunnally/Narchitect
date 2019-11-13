@@ -18,18 +18,16 @@ namespace Narchitect.SyntaxTreeParsing
         {
             var methodSyntaxNode = (MethodDeclarationSyntax)syntaxNode;
             var modifiers = methodSyntaxNode.Modifiers;
-            var typeNames = methodSyntaxNode.ReturnType.ParseTypeNamesFromType();
-            var fieldName = methodSyntaxNode.Identifier.Text;
-            var parameterTypeNames = methodSyntaxNode.ParameterList.Parameters.Select(p => p.Type.ToString());
 
             var method = new MethodModel();
             method.IsPublic = modifiers.Any(SyntaxKind.PublicKeyword);
             method.IsPrivate = modifiers.Any(SyntaxKind.PrivateKeyword);
             method.IsInternal = modifiers.Any(SyntaxKind.InternalKeyword);
             method.IsProtected = modifiers.Any(SyntaxKind.ProtectedKeyword);
-            method.TypeNames = typeNames;
-            method.Name = fieldName;
-            method.ParameterTypeNames = parameterTypeNames;
+            method.TypeNames = methodSyntaxNode.ReturnType.ParseTypeNamesFromType();
+            method.TypeString = methodSyntaxNode.ReturnType.ToString();
+            method.Name = methodSyntaxNode.Identifier.Text;
+            method.ParameterTypeNames = methodSyntaxNode.ParameterList.Parameters.SelectMany(p => p.Type.ParseTypeNamesFromType());
             ParsedMethods.Add(method);
         }
     }

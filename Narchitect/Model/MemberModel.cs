@@ -18,6 +18,8 @@ namespace Narchitect.Model
 
         public IEnumerable<string> TypeNames { get; set; }
 
+        public string TypeString { get; set; }
+
         public char GetAccessSymbol()
         {
             if (IsPublic) return '+';
