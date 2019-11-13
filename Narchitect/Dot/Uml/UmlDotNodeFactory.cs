@@ -34,7 +34,7 @@ namespace Narchitect.Dot.Uml
             var tables = new string[] { nodeTitleTable, nodeFieldTable, nodePropertyTable, nodeMethodTable };
 
             var nodeLines = tables.Where(x => !string.IsNullOrEmpty(x)).ToList();
-            return BuildHtmlTableString(nodeLines, "center", cellPadding: 0, addPaddingToTop: false);
+            return BuildHtmlTableString(nodeLines, "left", cellPadding: 0, addPaddingToTop: false);
         }
 
         private string BuildHtmlTableString(IList<string> contents, string contentAlignment, int cellPadding, bool addPaddingToTop = true)
@@ -60,7 +60,7 @@ namespace Narchitect.Dot.Uml
 
         private string CreateMethodLabel(MethodModel method)
         {
-            var parameters = string.Join(", ", method.ParameterTypeNames);
+            var parameters = string.Join(", ", method.ParameterTypeNames.Select(n => ReplaceHtmlSpecialCharacters(n)));
             return $"{method.GetAccessSymbol()} {method.Name}({parameters}) : {ReplaceHtmlSpecialCharacters(method.TypeString)}";
         }
 

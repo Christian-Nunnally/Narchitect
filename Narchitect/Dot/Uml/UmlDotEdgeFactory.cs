@@ -45,7 +45,8 @@
         private DotEdge CreateCompositionEdge(string from, string to, string label)
         {
             var edge = new DotEdge(from, to);
-            edge.StyleProperties["arrowhead"] = "diamond";
+            edge.StyleProperties["arrowhead"] = "none";
+            edge.StyleProperties["arrowtail"] = "diamond";
             return edge;
         }
     }
