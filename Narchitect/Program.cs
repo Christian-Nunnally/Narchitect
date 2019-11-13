@@ -42,6 +42,7 @@ namespace Narchitect
             dependencyFilterer.AddFilterer(new PrimitiveDependencyFilterer());
             dependencyFilterer.AddFilterer(new DuplicateDependencyFilterer());
             dependencyFilterer.AddFilterer(new PrecedenceDependencyFilterer());
+            dependencyFilterer.AddFilterer(new SelfDependencyFilterer());
             var filteredDependencies = dependencyFilterer.Filter(dependencies);
 
             // Convert classes to uml nodes
